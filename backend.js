@@ -76,6 +76,19 @@ function addUser(user) {
     users["users_list"].push(user);
 }
 
+//delete
+app.delete("/users/:id", (req, res) => {
+    const id = req.params["id"];
+    let result = users["users_list"].find((user) => user["id"] === id);
+    if (result == undefined || result.length == 0)
+        return res.status(404).send("Resource not found.");
+    else {
+        const index = users["users_list"].indexOf(result);
+        users["users_list"].splice(index, 1);
+        res.status(200).end();
+    }
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
